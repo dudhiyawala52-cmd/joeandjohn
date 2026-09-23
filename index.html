@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joe &amp; Jone | We Deal in Water Conservation</title>
+  <meta name="description" content="Smart sensor taps, flush valves and sanitary solutions for water conservation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <section class="hero" id="home">
+    <header class="site-header">
+      <!-- Left: hamburger menu -->
+      <div class="header-left">
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-controls="sideMenu" aria-expanded="false">
+          <span class="hamburger" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+          <span class="menu-label" data-i18n="menu">Menu</span>
+        </button>
+      </div>
+
+      <!-- Center: logo -->
+      <a href="#home" class="logo" aria-label="Home">
+        <img src="assets/images/logo.webp" alt="We Deal in Water Conservation" width="800" height="169">
+      </a>
+
+      <!-- Right: search + language -->
+      <div class="header-right">
+        <form class="search" id="searchForm" role="search">
+          <input type="search" id="searchInput" name="q" data-i18n-placeholder="searchPlaceholder" placeholder="Search products..." aria-label="Search">
+          <button type="submit" class="search-btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+        </form>
+
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" class="lang-btn is-active" data-lang="en" aria-pressed="true">EN</button>
+          <span class="lang-divider" aria-hidden="true"></span>
+          <button type="button" class="lang-btn" data-lang="ar" aria-pressed="false">عربي</button>
+        </div>
+      </div>
+    </header>
+  </section>
+
+  <!-- Side menu drawer -->
+  <div class="menu-overlay" id="menuOverlay" hidden></div>
+  <nav class="side-menu" id="sideMenu" aria-label="Main navigation" aria-hidden="true">
+    <button class="menu-close" id="menuClose" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <ul>
+      <li><a href="#home" data-i18n="navHome">Home</a></li>
+      <li><a href="#about" data-i18n="navAbout">About Us</a></li>
+      <li><a href="#products" data-i18n="navProducts">Products</a></li>
+      <li><a href="#solutions" data-i18n="navSolutions">Solutions</a></li>
+      <li><a href="#projects" data-i18n="navProjects">Projects</a></li>
+      <li><a href="#contact" data-i18n="navContact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
