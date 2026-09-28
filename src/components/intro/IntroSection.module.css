@@ -25,3 +25,11 @@
 .word span {
   will-change: opacity;
 }
+
+/* Phones: a long statement reads better at body-display size than at the h1 token. */
+@media (max-width: 767px) {
+  .statement {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+}
