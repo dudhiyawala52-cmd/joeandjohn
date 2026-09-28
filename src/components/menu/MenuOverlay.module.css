@@ -1,0 +1,272 @@
+/*
+ * Full-screen menu.
+ * Full-width top bar and bottom bar; between them, product categories on the
+ * left half and an edge-to-edge product image on the right half.
+ */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 59;
+  background: rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(6px);
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* A panel that drops from the top and is only as tall as its content. */
+.overlay {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: var(--header-h) auto auto;
+  max-height: 100svh;
+  /* Frosted glass, matching the scrolled header and the search panel. */
+  background: rgb(255 255 255 / 0.9);
+  backdrop-filter: blur(24px) saturate(1.8);
+  color: var(--black);
+  visibility: hidden;
+  opacity: 0;
+  clip-path: inset(0% 0% 100% 0%);
+}
+
+/* The category rows share the panel height equally, edge to edge. */
+.panel {
+  display: grid;
+  min-width: 0;
+  min-height: clamp(26rem, 62vh, 40rem);
+}
+
+.products {
+  display: grid;
+}
+
+.products ul {
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+}
+
+.products li {
+  display: grid;
+  border-bottom: 1px solid var(--stone);
+}
+
+.products li:last-child {
+  border-bottom: 0;
+}
+
+.mask {
+  overflow: hidden;
+}
+
+/* Product categories: the largest type in the menu. Pointing at one softens the rest. */
+.categoryLink {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem var(--gutter);
+  /* Large list items use the h3 style. */
+  font-size: var(--h3);
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-leading);
+  white-space: nowrap;
+  transition: background-color 0.35s var(--ease-out);
+}
+
+/* Hover and keyboard focus light up the whole row. */
+.categoryLink:hover,
+.categoryLink:focus-visible {
+  background: var(--basin);
+}
+
+.categoryLink:focus-visible {
+  outline-offset: -2px;
+}
+
+.categoryName {
+  justify-self: start;
+}
+
+/* The amber "sensor light" marks the category shown in the image. */
+.categoryName {
+  position: relative;
+}
+
+.categoryName::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.04em;
+  height: 2px;
+  background: var(--amber);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.categoryLink[data-active="true"] .categoryName::after {
+  transform: scaleX(1);
+}
+
+.count {
+  font-size: var(--step--1);
+  color: var(--steel);
+  font-variant-numeric: tabular-nums;
+}
+
+.thumb {
+  display: none;
+  width: 56px;
+  height: 56px;
+  padding: 4px;
+  border-radius: var(--radius);
+  background: var(--basin);
+}
+
+/* Main navigation: small, in the full-width bottom bar. */
+.primary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 2.25rem;
+}
+
+.primaryLink {
+  display: inline-block;
+  padding-block: 0.4rem;
+  font-size: var(--step-1);
+  letter-spacing: 0;
+  color: var(--steel);
+  transition: color 0.2s ease;
+}
+
+.primaryLink:hover {
+  color: var(--black);
+}
+
+/* Right half: flush between the two bars and against the right edge. No padding, radius or caption. */
+.media {
+  position: relative;
+  overflow: hidden;
+  background: var(--basin);
+}
+
+.mediaInner {
+  position: absolute;
+  inset: 0;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.7s var(--ease-out);
+}
+
+.layer[data-active="true"] {
+  opacity: 1;
+}
+
+.layerImage {
+  object-fit: cover;
+  transform: scale(1.03);
+  transition: transform 1.2s var(--ease-out);
+}
+
+.layer[data-active="true"] .layerImage {
+  transform: none;
+}
+
+/* Full-width bottom bar: main navigation and contact details. */
+.footer {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem 2rem;
+  padding: 1rem var(--gutter);
+  border-top: 1px solid var(--stone);
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 2rem;
+}
+
+.contact {
+  font-size: var(--step--1);
+}
+
+.contact a {
+  display: inline-block;
+  padding-block: 0.5rem;
+  color: var(--steel);
+  transition: color 0.2s ease;
+}
+
+.contact a:hover {
+  color: var(--black);
+}
+
+/* Touch screens have no hover, so each category also carries its own thumbnail. */
+@media (hover: none) {
+  .thumb {
+    display: block;
+    align-self: center;
+  }
+
+  .categoryLink {
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  }
+}
+
+/* Tablets and phones: one scrolling column, no image panel. */
+@media (max-width: 1023px) {
+  .overlay {
+    grid-template-columns: 100%;
+    grid-template-rows: var(--header-h) auto auto;
+    bottom: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .panel {
+    overflow: visible;
+  }
+
+  .media {
+    display: none;
+  }
+
+  .thumb {
+    display: block;
+    align-self: center;
+  }
+
+  .categoryLink {
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.9rem;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 767px) {
+  .panel {
+    padding-top: 1.5rem;
+  }
+
+  .primary {
+    gap: 0 1.5rem;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,217 @@
+/*
+ * Joe & Jone design tokens.
+ * Base system follows the client-approved Hindware reference: DM Sans,
+ * white and near-white surfaces, neutral greys, black type, circular
+ * controls and 6px corners. The amber of the Joe & Jone mark is the one
+ * brand accent, used like a sensor light: active states and focus only.
+ */
+:root {
+  --white: #ffffff;
+  --basin: #f8f8f8; /* bg-3 */
+  --stone: #d3d3d3; /* light grey: hairlines, idle states */
+  --steel: #454545; /* secondary text */
+  --graphite: #212529; /* primary dark */
+  --black: #000000;
+  --whatsapp: #25d366;
+  --amber: #f4b64c;
+  --amber-ink: #8a5a0a; /* amber dark enough for text on light surfaces */
+
+  --font-sans: var(--font-dm-sans), "Helvetica Neue", Arial, sans-serif;
+
+  /*
+   * Type scale. Every section uses these tokens and nothing else:
+   * h1 display headings (60px): intro and category panels; h2 hero slides (40px); h3 large list items;
+   * h4 to h6 minor headings, p-lg lead paragraphs, p body, small labels.
+   */
+  --h1: clamp(2.5rem, 1.5rem + 3vw, 3.75rem);
+  --h2: clamp(2rem, 1.5rem + 1.6vw, 2.5rem);
+  --h3: clamp(1.625rem, 1.3rem + 1vw, 2rem);
+  --h4: 1.5rem;
+  --h5: 1.25rem;
+  --h6: 1rem;
+  --p-lg: 1.125rem;
+  --p: 0.9375rem;
+  --small: 0.8125rem;
+  --heading-weight: 500;
+  --heading-leading: 1.15;
+
+  /* Legacy aliases kept for existing components. */
+  --step--2: 0.75rem;
+  --step--1: var(--small);
+  --step-0: var(--p);
+  --step-1: var(--p-lg);
+  --step-2: var(--h4);
+  --step-3: var(--h3);
+  --step-4: var(--h2);
+  --display: var(--h2);
+  --display-sm: var(--h2);
+
+  --radius-round: 50%;
+  --radius: 6px;
+  --shadow-sm: rgba(0, 0, 0, 0.2) 0 0 5px 1px;
+  --shadow-md: rgba(0, 0, 0, 0.1) 0 0 10px 2px;
+
+  --gutter: clamp(1rem, 0.4rem + 2.6vw, 3rem);
+  --header-h: 5rem;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Keeps the layout still when an overlay locks page scrolling. */
+  scrollbar-gutter: stable;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+body[data-locked="true"] {
+  overflow: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+dl,
+dd {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--heading-weight);
+  line-height: var(--heading-leading);
+  letter-spacing: 0;
+}
+
+h1 {
+  font-size: var(--h1);
+}
+
+h2 {
+  font-size: var(--h2);
+}
+
+h3 {
+  font-size: var(--h3);
+}
+
+h4 {
+  font-size: var(--h4);
+}
+
+h5 {
+  font-size: var(--h5);
+}
+
+h6 {
+  font-size: var(--h6);
+}
+
+p {
+  font-size: var(--p);
+  line-height: 1.55;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--amber);
+  color: var(--graphite);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--graphite);
+  color: var(--white);
+  transform: translateY(-200%);
+  transition: transform 0.2s var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

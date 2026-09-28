@@ -1,0 +1,27 @@
+.section {
+  padding: clamp(6rem, 22vh, 14rem) var(--gutter);
+  background: var(--white);
+}
+
+.container {
+  max-width: 68rem;
+  margin-inline: auto;
+}
+
+/* Display-size statement (h1 token) in regular weight. */
+.statement {
+  font-size: var(--h1);
+  font-weight: 400;
+  line-height: var(--heading-leading);
+  color: var(--black);
+  text-wrap: pretty;
+}
+
+/* Keeps each word's characters together so lines never break mid-word. */
+.word {
+  white-space: nowrap;
+}
+
+.word span {
+  will-change: opacity;
+}

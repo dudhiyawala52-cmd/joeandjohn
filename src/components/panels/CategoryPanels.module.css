@@ -1,0 +1,157 @@
+.section {
+  position: relative;
+  background: var(--black);
+}
+
+/* Each panel sticks to the top so the next one slides over it. */
+.panel {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  background: var(--basin);
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 30%;
+  will-change: transform;
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  background: var(--black);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+}
+
+.landscape,
+.portrait {
+  object-fit: cover;
+}
+
+.portrait {
+  display: none;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.panel[data-tone="dark"] {
+  background: var(--graphite);
+}
+
+/* Shade that starts dark at the left edge and fades out towards the middle, behind the heading. */
+.media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgb(0 0 0 / 0.62) 0%, rgb(0 0 0 / 0.34) 28%, rgb(0 0 0 / 0.08) 50%, transparent 62%);
+  pointer-events: none;
+}
+
+/* Title, description and link bottom left; the rest of the photo stays clear. */
+.content {
+  position: absolute;
+  color: var(--white);
+  top: calc(var(--header-h) + 3vh + 50px);
+  bottom: calc(clamp(2rem, 7vh, 4.5rem) + 50px);
+  left: var(--gutter);
+  right: var(--gutter);
+  display: grid;
+}
+
+/* Display headings (h1 token, 60px), matching the intro heading. */
+.title {
+  font-size: var(--h1);
+}
+
+.titleLine {
+  display: block;
+  white-space: nowrap;
+}
+
+.foot {
+  align-self: end;
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+  max-width: 34rem;
+}
+
+.summary {
+  max-width: 30rem;
+  font-size: 1rem;
+  color: rgb(255 255 255 / 0.88);
+  text-wrap: pretty;
+}
+
+.cta {
+  margin-top: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 48px;
+  padding: 0 1.5rem;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--black);
+  font-weight: 500;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    gap 0.4s var(--ease-out);
+}
+
+.cta:hover {
+  background: var(--amber);
+  color: var(--black);
+  gap: 1.1rem;
+}
+
+.note {
+  font-size: var(--step--1);
+  color: rgb(255 255 255 / 0.7);
+}
+
+/* Portrait screens: the shade rises from the bottom behind the text block. */
+@media (max-aspect-ratio: 1/1) {
+  .landscape {
+    display: none;
+  }
+
+  .portrait {
+    display: block;
+  }
+
+  .video {
+    object-position: 52% 50%;
+  }
+
+  .media::after {
+    background: linear-gradient(to top, rgb(0 0 0 / 0.7) 0%, rgb(0 0 0 / 0.35) 40%, transparent 60%);
+  }
+
+  .content {
+    top: calc(var(--header-h) + 1.5rem + 30px);
+    bottom: calc(2rem + 30px);
+  }
+
+  .summary {
+    font-size: 0.9375rem;
+  }
+}

@@ -1,0 +1,338 @@
+.hero {
+  --index-w: clamp(15rem, 20vw, 18rem);
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  background: var(--graphite);
+  color: var(--white);
+  touch-action: pan-y;
+}
+
+.hero[data-tone="light"] {
+  color: var(--black);
+}
+
+.track {
+  position: absolute;
+  inset: 0;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--graphite);
+}
+
+/* Before JS runs only the first slide shows, so there is no flash of the stack. */
+.slide:not([data-slide="0"]) {
+  visibility: hidden;
+}
+
+.slide[data-tone="light"] {
+  background: var(--basin);
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+  transform-origin: 50% 60%;
+}
+
+.photo {
+  object-fit: cover;
+  object-position: var(--focus);
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .photo {
+    object-position: var(--focus-mobile);
+  }
+}
+
+/* Soft shade in the two bottom corners only, behind the copy and the slide index,
+   so white text stays readable on bright photos. Each corner is tinted with a deep
+   shade of the photo's own colour there; the middle of the image is untouched. */
+.shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgb(var(--shade-t, 0 0 0) / var(--shade-t-a, 0)) 0, transparent 220px),
+    radial-gradient(ellipse 55% 55% at 0% 100%, rgb(var(--shade-l, 0 0 0) / 0.82) 0%, rgb(var(--shade-l, 0 0 0) / 0.64) 45%, transparent 100%),
+    radial-gradient(ellipse 40% 45% at 100% 100%, rgb(var(--shade-r, 0 0 0) / 0.7) 0%, rgb(var(--shade-r, 0 0 0) / 0.5) 45%, transparent 100%);
+}
+
+.hero[data-tone="dark"] .copy,
+.controls[data-tone="dark"] {
+  text-shadow: 0 1px 18px rgb(0 0 0 / 0.4);
+}
+
+/* Studio slide: supplier cut-outs on a lit wall, like plates mounted side by side. */
+.studio {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.5rem, 3vw, 4rem);
+  padding: var(--header-h) var(--gutter) 38vh;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 30%, var(--white) 0%, transparent 70%),
+    linear-gradient(to bottom, #f3f3f3 0%, var(--basin) 55%, #ececec 100%);
+}
+
+.plate {
+  width: min(24vw, 34vh);
+  mix-blend-mode: multiply;
+}
+
+.plate[data-index="1"] {
+  width: min(28vw, 40vh);
+  transform: translateY(-4%);
+}
+
+.plate img {
+  width: 100%;
+  height: auto;
+}
+
+/* Bottom left, left-aligned, sharing a baseline with the slide index on the right. */
+.copy {
+  position: absolute;
+  left: var(--gutter);
+  bottom: clamp(2rem, 6vh, 4rem);
+  /* Never wider than the space left of the slide index. */
+  width: min(34rem, calc(100% - 2 * var(--gutter) - var(--index-w) - 2rem));
+  text-align: left;
+  display: grid;
+  justify-items: start;
+  gap: 1.25rem;
+}
+
+.heading {
+  /* Narrow measure so the 40px heading always breaks over two balanced lines. */
+  max-width: 11em;
+  font-size: var(--h2);
+  text-wrap: balance;
+}
+
+.wordMask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.word {
+  display: inline-block;
+}
+
+.body {
+  max-width: 34rem;
+  font-size: var(--p-lg);
+  opacity: 0.86;
+  text-wrap: pretty;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 48px;
+  padding: 0 1.5rem;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--black);
+  font-size: var(--step-0);
+  font-weight: 500;
+  transition:
+    background-color 0.3s ease,
+    gap 0.4s var(--ease-out);
+}
+
+.cta:hover {
+  background: var(--amber);
+  gap: 1.1rem;
+}
+
+.slide[data-tone="light"] .cta {
+  background: var(--black);
+  color: var(--white);
+}
+
+.slide[data-tone="light"] .cta:hover {
+  background: var(--amber);
+  color: var(--black);
+}
+
+/* Bottom right: arrows above a numbered index of the slides. */
+.controls {
+  position: absolute;
+  z-index: 5;
+  right: var(--gutter);
+  bottom: clamp(2rem, 6vh, 4rem);
+  width: var(--index-w);
+  display: grid;
+  gap: 1rem;
+}
+
+/* The index and arrows take their own colour, which can differ from the copy on split photos. */
+.controls[data-tone="light"] {
+  color: var(--black);
+}
+
+.controls[data-tone="dark"] {
+  color: var(--white);
+}
+
+.arrows {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-round);
+  border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.arrow:hover {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--black);
+}
+
+.controls[data-tone="light"] .arrow:hover {
+  background: var(--black);
+  border-color: var(--black);
+  color: var(--white);
+}
+
+.index {
+  display: grid;
+}
+
+.indexItem {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  align-items: baseline;
+  row-gap: 0.6rem;
+  width: 100%;
+  padding-top: 0.7rem;
+  text-align: left;
+  font-size: var(--small);
+  opacity: 0.55;
+  transition: opacity 0.3s ease;
+}
+
+.indexItem:hover,
+.indexItem[aria-current="true"] {
+  opacity: 1;
+}
+
+.controls[data-tone="light"] .indexItem {
+  opacity: 0.75;
+  font-weight: 500;
+}
+
+.controls[data-tone="light"] .indexItem:hover,
+.controls[data-tone="light"] .indexItem[aria-current="true"] {
+  opacity: 1;
+}
+
+.controls[data-tone="light"] .arrow {
+  background: rgb(255 255 255 / 0.55);
+  border-color: rgb(0 0 0 / 0.35);
+}
+
+.indexNum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Thin rule under each entry; the current one fills with amber as its timer runs. */
+.bar {
+  grid-column: 1 / -1;
+  position: relative;
+  height: 2px;
+  background: color-mix(in srgb, currentColor 30%, transparent);
+  overflow: hidden;
+}
+
+.barFill {
+  position: absolute;
+  inset: 0;
+  background: var(--amber);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+@media (max-width: 767px) {
+  /* Phones: the copy and progress bars stack along the bottom, so the shade rises from there. */
+  .shade {
+    background:
+      linear-gradient(to bottom, rgb(var(--shade-t, 0 0 0) / var(--shade-t-a, 0)) 0, transparent 160px),
+      linear-gradient(to top, rgb(var(--shade-l, 0 0 0) / 0.78) 0%, rgb(var(--shade-l, 0 0 0) / 0.5) 30%, transparent 55%);
+  }
+
+  .copy {
+    bottom: 5rem;
+    width: calc(100% - 2 * var(--gutter));
+    gap: 1rem;
+  }
+
+  /* Phones: the index becomes three slim progress bars; swipe replaces the arrows. */
+  .controls {
+    left: var(--gutter);
+    width: auto;
+    bottom: 1.5rem;
+  }
+
+  .arrows,
+  .indexNum,
+  .indexLabel {
+    display: none;
+  }
+
+  .index {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  /* Taller hit area than the visible bar, for comfortable tapping. */
+  .indexItem {
+    display: block;
+    padding-block: 1.25rem;
+  }
+
+  .studio {
+    padding-bottom: 42vh;
+    gap: 0.25rem;
+  }
+
+  .plate {
+    width: 30vw;
+  }
+
+  .plate[data-index="1"] {
+    width: 36vw;
+  }
+}

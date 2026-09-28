@@ -1,0 +1,72 @@
+.footer {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "brand . contact"
+    "links links legal";
+  gap: 2.5rem 2rem;
+  padding: 3.5rem var(--gutter) 2rem;
+  background: var(--black);
+  color: var(--white);
+  font-size: var(--step--1);
+}
+
+.brand {
+  grid-area: brand;
+}
+
+.logo {
+  width: 180px;
+  height: auto;
+}
+
+.contact {
+  grid-area: contact;
+  display: grid;
+  justify-items: end;
+  gap: 0.25rem;
+  font-size: var(--step-1);
+}
+
+.links {
+  grid-area: links;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 2rem;
+}
+
+.contact a,
+.links a {
+  display: inline-block;
+  padding-block: 0.4rem;
+  color: rgb(255 255 255 / 0.72);
+  transition: color 0.2s ease;
+}
+
+.contact a:hover,
+.links a:hover {
+  color: var(--amber);
+}
+
+.legal {
+  grid-area: legal;
+  align-self: center;
+  color: rgb(255 255 255 / 0.55);
+}
+
+@media (max-width: 767px) {
+  .footer {
+    grid-template-columns: 1fr;
+    grid-template-areas: "brand" "contact" "links" "legal";
+    gap: 1.75rem;
+  }
+
+  .contact {
+    justify-items: start;
+    font-size: var(--step-0);
+  }
+
+  .logo {
+    width: 150px;
+  }
+}
