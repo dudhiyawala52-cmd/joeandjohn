@@ -58,6 +58,13 @@
   --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
+/* Slimmer header on phones. */
+@media (max-width: 767px) {
+  :root {
+    --header-h: 4rem;
+  }
+}
+
 *,
 *::before,
 *::after {

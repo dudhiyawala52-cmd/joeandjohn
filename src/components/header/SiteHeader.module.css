@@ -163,10 +163,6 @@
 }
 
 @media (max-width: 767px) {
-  :root {
-    --header-h: 4rem;
-  }
-
   .menuButton span,
   .actionLabel {
     display: none;
