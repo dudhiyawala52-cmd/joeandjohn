@@ -1,6 +1,8 @@
-import type { NextConfig } from "next";
+// Plain JavaScript on purpose: hosts with an older glibc (e.g. Hostinger) cannot load
+// Next's native compiler, and the WebAssembly fallback cannot compile a next.config.ts.
 
-const nextConfig: NextConfig = {
+/** @type {import("next").NextConfig} */
+const nextConfig = {
   // A package-lock.json in the user home folder would otherwise be picked as the workspace root.
   turbopack: { root: process.cwd() },
   images: {
